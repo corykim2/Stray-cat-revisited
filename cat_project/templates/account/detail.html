@@ -13,7 +13,7 @@
 
     <!-- kakao map -->
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ KAKAO_JS_KEY }}&libraries=services,clusterer,drawing"></script>
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e06e9f9b88886eb69986bcdf1d8faa31&libraries=services,clusterer,drawing"></script>
 
     <!-- google material icons -->
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|
@@ -22,67 +22,67 @@
     <!-- custom css & js-->
     <link rel="stylesheet" href="{% static '/css/detail.css' %}">
 
-    <title>?�테?�페?��?</title>
+    <title>디테일페이지</title>
 </head>
 
 <body>
-    <!-- ?�이???�어?�는 부�?-->
+    <!-- 데이터 얻어오는 부분 -->
     <div id="latitude" style="display: none;">{{cat_detail.latitude}}</div>
     <div id="longitude" style="display: none;">{{cat_detail.longitude}}</div>
     <div id="photo" style="display: none;">{{cat_detail.photo}}</div>
     <div id="cat_id" style="display: none;">{{cat_detail.id}}</div>
 
-    <!-- ?�기?��????�론??만들�???-->
-    <!-- 만들 ??민원 ?�고 버튼, �?줬을 ???�르??버튼, 간식 줬을 ???�르??버튼, 고양???�플 ???�고?�는 버튼??만들?�줘. 백엔???�업?� ?�중???�게. -->
-    <!-- �?버튼???�르�?모달 ?�업???�는 거까지�??�줘. https://youtu.be/M8UPyeF5DfM?t=14179 링크 ?�어가�????�오??부분에??만드??것처???�주�?졸을 �?같아. ?�기 만드??방법???��? -->
+    <!-- 여기서부터 프론트 만들면 됨 -->
+    <!-- 만들 때 민원 신고 버튼, 밥 줬을 때 누르는 버튼, 간식 줬을 때 누르는 버튼, 고양이 아플 떄 신고하는 버튼도 만들어줘. 백엔드 작업은 나중에 할게. -->
+    <!-- 각 버튼을 누르면 모달 팝업이 뜨는 거까지만 해줘. https://youtu.be/M8UPyeF5DfM?t=14179 링크 들어가면 딱 나오는 부분에서 만드는 것처럼 해주면 졸을 것 같아. 여기 만드는 방법도 나와 -->
 
-    <!-- ?�기???�는 �??�보 ?�오??부분인???�이지가 ?�성?�기 ?�에 {{cat_detail.name}} 같�? 부분이 ?�스?�로 치환?�다�??�각?�면 ??�?같아. -->
+    <!-- 여기에 있는 게 정보 나오는 부분인데 페이지가 생성되기 전에 {{cat_detail.name}} 같은 부분이 텍스트로 치환된다고 생각하면 될 것 같아. -->
 
 
 
-    <!-- 추�?!!!!!! �?줬을 ???�르??버튼?� 만듦! -->
-    <!-- 갑자�?발견?�는?????�트 ?�같?� ?�상??글?�는 ?�트가 ?�먹??-->
+    <!-- 추가!!!!!! 밥 줬을 때 누르는 버튼은 만듦! -->
+    <!-- 갑자기 발견했는데 이 폰트 힣같은 이상한 글자는 폰트가 안먹음 -->
         <center><div style="width: 60%;">
             <br><br><br><hr style="width: 60%;">
             <br>
             <div style="display: flex; justify-content: center;">
                 <div style="display: inline-block; margin-right: 5%;"><image src="/static/media/{{cat_detail.photo}}" width="250px"></div>
                 <div style="display: inline-block; text-align: left; ">
-                    <p>?�름: {{cat_detail.name}}</p>
-                    <p>?�록?? {{cat_detail.date}}</p>
-                    <p>?�록?? {{cat_detail.author}}</p>
+                    <p>이름: {{cat_detail.name}}</p>
+                    <p>등록일: {{cat_detail.date}}</p>
+                    <p>등록자: {{cat_detail.author}}</p>
                 </div>
             </div><br>
 
             <hr style="width: 60%;"><br>
             
-            <span class="problem" id="feed-btn" style="cursor: pointer">방금 ?�료??줬어??/span>
-            <span id="feed_date">마�?�?배식: {{ last_feed_data.date }}</span>
+            <span class="problem" id="feed-btn" style="cursor: pointer">방금 사료을 줬어요</span>
+            <span id="feed_date">마지막 배식: {{ last_feed_data.date }}</span>
             <br><br><br>
-            <span class="problem" id="snack-btn" style="cursor: pointer">방금 간식??줬어??/span>
-            <span id="snack_date">마�?�?간식: {{ last_Snack_data.date }}</span>
+            <span class="problem" id="snack-btn" style="cursor: pointer">방금 간식을 줬어요</span>
+            <span id="snack_date">마지막 간식: {{ last_Snack_data.date }}</span>
 
             <br>
-            <a href="{% url 'injury' %}?cat_id={{cat_detail.pk}}">부???�고</a>&nbsp&nbsp
-            <a href="{% url 'complaint' %}?cat_id={{cat_detail.pk}}">민원 ?�고</a><br><br>
+            <a href="{% url 'injury' %}?cat_id={{cat_detail.pk}}">부상 신고</a>&nbsp&nbsp
+            <a href="{% url 'complaint' %}?cat_id={{cat_detail.pk}}">민원 신고</a><br><br>
 
             <hr style="width: 60%;"><br>
             
             <div style="display: flex; justify-content: left; margin-left: 20%;">
-                <div id="map" style="width:300px;height:300px;border-radius: 30px; margin-right: 5%;"></div><!-- 지??박스 -->
+                <div id="map" style="width:300px;height:300px;border-radius: 30px; margin-right: 5%;"></div><!-- 지도 박스 -->
 
                 <div style="display: block; text-align: left;">
-                    <p>�? {{cat_detail.species}}</p>
-                    <p>?�별: {{cat_detail.sex}}</p>
-                    <p>중성???��?: {{cat_detail.neutral}}</p>
-                    <p>?�람 경계?? {{cat_detail.alert}}</p>
+                    <p>종: {{cat_detail.species}}</p>
+                    <p>성별: {{cat_detail.sex}}</p>
+                    <p>중성화 여부: {{cat_detail.neutral}}</p>
+                    <p>사람 경계도: {{cat_detail.alert}}</p>
                 </div>
             </div><br>
 
             <hr style="width: 60%;"><br>
 
             <div style="display: block; text-align: center;">
-                <h4>?�징</h4>
+                <h4>특징</h4>
                 <p>{{cat_detail.character|linebreaks}}</p>
             </div>
         </div></center>
@@ -96,41 +96,41 @@
         {% csrf_token %}
     </form>
 
-    <h1>민원 & 부??/h1>
+    <h1>민원 & 부상</h1>
     
-    <!-- 민원 ?�보 div 반복?�성�?-->
+    <!-- 민원 정보 div 반복생성문 -->
     <div style="display: flex; justify-content: center; ">
         {% for complaint in complaint_list %}
             <div style="padding: 5px; border : 3px solid #fcbbbb; margin: 5px; background-color: rgb(255, 247, 247);">
                 <h4 style="color: red;">민원 {{ forloop.counter }}</h4>
                 {% if complaint.form_tag == 0 %}
-                    민원 종류: ?�정 고양??민원
+                    민원 종류: 특정 고양이 민원
                 {% else %}
-                    민원 종류: 지??민원
+                    민원 종류: 지역 민원
                 {% endif %}
                 <br><br>
-                ?�고?? {{ complaint.date }}<br><br>
-                ?�고 종류: {{ complaint.complaint_kind }}<br><br>
-                ?�세 ?�보: {{ complaint.character|linebreaks }}<br><br>
+                신고일: {{ complaint.date }}<br><br>
+                신고 종류: {{ complaint.complaint_kind }}<br><br>
+                상세 정보: {{ complaint.character|linebreaks }}<br><br>
             </div>
         {% endfor %}
         {% for injury in injury_list %}
             <div style="padding: 5px; border : 3px solid #fcbbbb; margin: 5px; background-color: rgb(255, 247, 247);">
-                <h4 style="color: orange;">부??{{ forloop.counter }}</h4>
+                <h4 style="color: orange;">부상 {{ forloop.counter }}</h4>
                 {% if injury.form_tag == 0 %}
-                    민원 종류: ?�정 고양??민원
+                    민원 종류: 특정 고양이 민원
                 {% else %}
-                    민원 종류: 지??민원
+                    민원 종류: 지역 민원
                 {% endif %}
                 <br><br>
-                ?�고?? {{ injury.date }}<br><br>
-                ?�고 종류: {{ injury.injury_kind }}<br><br>
-                ?�세 ?�보: {{ injury.character|linebreaks }}<br><br>
+                신고일: {{ injury.date }}<br><br>
+                신고 종류: {{ injury.injury_kind }}<br><br>
+                상세 정보: {{ injury.character|linebreaks }}<br><br>
             </div>
         {% endfor %}
     </div>
 
-    <!-- 지??코드 -->
+    <!-- 지도 코드 -->
     <script>
         var latitude = $("#latitude").text();
         var longitude = $("#longitude").text();
@@ -140,7 +140,7 @@
         var container = document.getElementById('map');
         var options = {
             center: new kakao.maps.LatLng(latitude, longitude),
-            level: 2 //지??최초 ?�시?????��? ?�도
+            level: 2 //지도 최초 표시될 때 확대 정도
         };
         var map = new kakao.maps.Map(container, options);
 
@@ -160,7 +160,7 @@
         marker.setMap(map);
     </script>
 
-    <!-- ?�식 ?�록코드 -->
+    <!-- 음식 등록코드 -->
     <script>
         const csrf = document.getElementsByName('csrfmiddlewaretoken')
 
@@ -179,7 +179,7 @@
                 data: fd,
                 success: function(response){
                     //console.log('success')
-                    $("#feed_date").text("마�?�?배식: "+response)
+                    $("#feed_date").text("마지막 배식: "+response)
                 },
                 error: function(error){
                     console.log('error', error)
@@ -192,7 +192,7 @@
         });
     </script>
 
-    <!-- 간식 ?�록코드 -->
+    <!-- 간식 등록코드 -->
     <script>
         const csrf_Snack = document.getElementsByName('csrfmiddlewaretoken')
 
@@ -212,7 +212,7 @@
                 data: fd,
                 success: function(response){
                     //console.log('success')
-                    $("#snack_date").text("마�?�?간식: "+response)
+                    $("#snack_date").text("마지막 간식: "+response)
                 },
                 error: function(error){
                     console.log('error', error)

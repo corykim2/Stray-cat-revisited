@@ -7,7 +7,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # .env 파일이 있으면 환경변수로 읽어들인다 (없어도 에러 아님)
 load_dotenv(BASE_DIR / '.env')
-KAKAO_JS_KEY = os.environ.get('KAKAO_JS_KEY', '')
 
 
 # Quick-start development settings - unsuitable for production
@@ -62,7 +61,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'config.context_processors.kakao',
             ],
         },
     },

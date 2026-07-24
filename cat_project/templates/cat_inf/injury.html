@@ -11,7 +11,7 @@
 
     <!-- kakao map -->
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ KAKAO_JS_KEY }}&libraries=clusterer"></script>
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e06e9f9b88886eb69986bcdf1d8faa31&libraries=clusterer"></script>
 
     <!-- google material icons -->
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|
@@ -20,40 +20,40 @@
     <!-- custom css & js-->
     <link rel="stylesheet" href="{% static '/css/injury.css' %}">
 
-    <title>부???�고</title>
+    <title>부상 신고</title>
 
 </head>
 
 <body>
-    <!-- ?�떤 고양?��? 문제?��? ?�아?? -->
-    <h1>부???�고</h1>
+    <!-- 어떤 고양이가 문제인지 알아요! -->
+    <h1>부상 신고</h1>
     <div id="know_cat_div" style="display: block">
-        <center><div id="map1" style="width:500px;height:400px;"></div></center><!-- 지??-->
+        <center><div id="map1" style="width:500px;height:400px;"></div></center><!-- 지도 -->
     </div>
 
     <div>
        
         <form method="post" action="{% url 'injury' %}" id="injury-form">
             {% csrf_token %}
-            부??종류:
-            <input name="injury_kind" type="checkbox" value="?�처가 ?�어??>?�처가 ?�어??
-            <input name="injury_kind" type="checkbox" value="?�리�??�어??>?�리�??�어??
-            <input name="injury_kind" type="checkbox" value="?�사/구토�??�요">?�사/구토�??�요
+            부상 종류:
+            <input name="injury_kind" type="checkbox" value="상처가 있어요">상처가 있어요
+            <input name="injury_kind" type="checkbox" value="다리를 절어요">다리를 절어요
+            <input name="injury_kind" type="checkbox" value="설사/구토를 해요">설사/구토를 해요
             <br><br>
-            직접?�력:
+            직접입력:
             <textarea rows="5" cols="30" name="character"
-                placeholder="?�세?�명, 기�? ?�항???�어주세?? id="textarea"></textarea>
+                placeholder="상세설명, 기타 사항을 적어주세요" id="textarea"></textarea>
             <br><br>
 
-            <input id="latitude" name="latitude" type="hidden" value=37.643388210851406> <!-- ?�도 보내??부�?-->
-            <input id="longitude" name="longitude" type="hidden" value=127.10764129356582> <!-- 경도 보내??부�?-->
-            <input id="default_cat_id" name="default_cat_id" type="hidden" value={{default_cat_id}}> <!-- ?�폴???�이??-->
+            <input id="latitude" name="latitude" type="hidden" value=37.643388210851406> <!-- 위도 보내는 부분 -->
+            <input id="longitude" name="longitude" type="hidden" value=127.10764129356582> <!-- 경도 보내는 부분 -->
+            <input id="default_cat_id" name="default_cat_id" type="hidden" value={{default_cat_id}}> <!-- 디폴트 아이디 -->
             <br><br>
         </form>
-        <span id="confirm-btn" class ="submit"style="cursor: pointer" input type="submit">?�록</span>
+        <span id="confirm-btn" class ="submit"style="cursor: pointer" input type="submit">등록</span>
     </div>
 
-    <!-- 지???�팅 ?�수 코드-->
+    <!-- 지도 세팅 함수 코드-->
     <script>
         var cat_id = -1;
         var default_cat_id = $('input[name=default_cat_id]').val();
@@ -65,7 +65,7 @@
             var container = document.getElementById('map1');
             var options = {
                 center: new kakao.maps.LatLng(a, b),
-                level: 3 //지??최초 ?�시?????��? ?�도
+                level: 3 //지도 최초 표시될 때 확대 정도
             };
             var map = new kakao.maps.Map(container, options);
             map.setMaxLevel(9);
@@ -81,7 +81,7 @@
                     for (var i = 0; i < data.length; i++) {
                         const data1 = $.trim(data[i].fields.photo);
 
-                        //?�치 ?�보 추�?
+                        //위치 정보 추가
                         positions.push({
                             title: data[i].fields.name,
                             latlng: new kakao.maps.LatLng(data[i].fields.latitude, data[i].fields.longitude),
@@ -89,7 +89,7 @@
                             content2: `<div style="padding:5px;">${data[i].fields.name}</div>`,
                             id: data[i].pk
                         });
-                        //?��?지 ?�보 추�?
+                        //이미지 정보 추가
                         if (data[i].fields.photo.length != 0)
                             images.push("{% static 'media/' %}" + data[i].fields.photo);
                         else
@@ -97,23 +97,23 @@
                     }
                 },
                 error: function (request, status, error) {
-                    console.log('?�패');
+                    console.log('실패');
                 },
                 async: false
             });
             var markers = [];
 
-            // 마커 ?�러?�터?��? ?�성?�니??
+            // 마커 클러스터러를 생성합니다 
             var clusterer = new kakao.maps.MarkerClusterer({
-                map: map, // 마커?�을 ?�러?�터�?관리하�??�시??지??객체 
-                averageCenter: true, // ?�러?�터???�함??마커?�의 ?�균 ?�치�??�러?�터 마커 ?�치�??�정 
-                minLevel: 2, // ?�러?�터 ??최소 지???�벨 
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+                minLevel: 2, // 클러스터 할 최소 지도 레벨 
                 gridSize: 40,
-                //?�러?�터 ?��??? ??부분을 주석처리?�면 ?�래 ?��?지�??�옴
+                //클러스터 스타일, 이 부분을 주석처리하면 원래 이미지로 나옴
                 styles: [{
                     'width': '52px',
                     'height': '52px',
-                    'background': 'url(../../static/image/eee.png) no-repeat', //?��?지???�기가 52x52?�야 ??
+                    'background': 'url(../../static/image/eee.png) no-repeat', //이미지의 크기가 52x52여야 함
                     'border-radius': '52px',
                     'border': '1px solid #1a86ae',
                     'color': 'white',
@@ -125,7 +125,7 @@
                 }]
             });
 
-            var imageSize = new kakao.maps.Size(50, 50); // 마커 ?��?지???��?지 ?�기 ?�니??
+            var imageSize = new kakao.maps.Size(50, 50); // 마커 이미지의 이미지 크기 입니다
              var infowindow_list = [];
             $.ajax({
                 url: "{% url 'getApi_marked' %}",
@@ -138,14 +138,14 @@
 
 
                     for (var i = 0; i < positions.length; i++) {
-                        var markerImage = new kakao.maps.MarkerImage(images[i], imageSize);// 마커 ?��?지�??�성?�니?? 
+                        var markerImage = new kakao.maps.MarkerImage(images[i], imageSize);// 마커 이미지를 생성합니다  
 
-                        // 마커�??�성?�니??
+                        // 마커를 생성합니다
                         var marker = new kakao.maps.Marker({
-                            map: map, // 마커�??�시??지??
-                            position: positions[i].latlng, // 마커�??�시???�치
-                            title: positions[i].title, // 마커???�?��?, 마커??마우?��? ?�리�??�?��????�시?�니??
-                            image: markerImage // 마커 ?��?지 
+                            map: map, // 마커를 표시할 지도
+                            position: positions[i].latlng, // 마커를 표시할 위치
+                            title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                            image: markerImage // 마커 이미지 
                         });
                         var de = Number(positions[i].id)
                         var iwContent;
@@ -157,8 +157,8 @@
                                                 ${positions[i].content1}
                                             </div>
                                             ${positions[i].content2}
-                                            <div class="check"><h4>?�재 ?�택??/h4></div> 
-                                        </div>` // ?��?줘요, ?�기 check가 ?�먹??submit?�???�재 ?�택??부분을 ?�그?�게 만들�??�어
+                                            <div class="check"><h4>현재 선택됨</h4></div> 
+                                        </div>` // 도와줘요, 여기 check가 안먹음 submit저럼 현재 선택됨 부분을 동그랗게 만들고 싶어
                         }
                         else {
                             iwContent = `<div id="${positions[i].id}"; class="marker";>
@@ -167,16 +167,16 @@
                                                 ${positions[i].content1}
                                             </div>
                                             ${positions[i].content2}
-                                            <div class="check"><h4>?�재 ?�택??/h4></div> 
-                                        </div>` // ?��?줘요, ?�기 check ?�래?��? ?�먹??.. submit?�???�재 ?�택??부분을 ?�그?�게 만들�??�어, 그리�??��?지 겉에 ?�그?�게 밖에 ?�색?�랑 분리?�는 ?�을 만들�??�어
+                                            <div class="check"><h4>현재 선택됨</h4></div> 
+                                        </div>` // 도와줘요, 여기 check 클래스가 안먹음... submit저럼 현재 선택됨 부분을 동그랗게 만들고 싶어, 그리고 이미지 겉에 동그랗게 밖에 흰색이랑 분리되는 선을 만들고 싶어
                         }
 
-                        // 마커???�시???�포?�도?��? ?�성?�니??
+                        // 마커에 표시할 인포윈도우를 생성합니다 
                         var infowindow = new kakao.maps.InfoWindow({
                             content: iwContent,
                         });
                         infowindow_list.push(infowindow);
-                        // for문에???�로?��?만들??주�? ?�으�?마�?�?마커?�만 ?�벤?��? ?�록?�니??
+                        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
                         kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow, de));
 
                         if(default_cat_id == de){
@@ -188,7 +188,7 @@
                     clusterer.addMarkers(markers);
                 },
                 error: function (request, status, error) {
-                    console.log('?�패22');
+                    console.log('실패22');
                 }
             });
 
@@ -207,13 +207,13 @@
 
         
     </script>
-    <!-- 지??초기??-->
+    <!-- 지도 초기화 -->
     <script>
         know_map_set()
     </script>
-    <!-- ??관??코드-->
+    <!-- 폼 관련 코드-->
     <script>
-        const injuryForm = document.getElementById('injury-form') //?�테�?
+        const injuryForm = document.getElementById('injury-form') //폼테그
         const csrf = document.getElementsByName('csrfmiddlewaretoken')
         const fd = new FormData();
 
@@ -224,11 +224,11 @@
             var checked_list = [];
 
             $("input:checkbox[name=injury_kind]:checked").each(function() {
-                checked_list.push($(this).val()); // 체크??값의 value�?가?�오�?
+                checked_list.push($(this).val()); // 체크된 값의 value값 가져오기
             });
 
             fd.set('csrfmiddlewaretoken', csrf[0].value)
-            fd.set('character', characterInput); //추�?�??�을 ?�항 ?�스???�어리어
+            fd.set('character', characterInput); //추가로 적을 사항 텍스트 에어리어
             fd.set('injury_kind', checked_list);
 
             if(cat_id != -1){
@@ -252,12 +252,12 @@
                 })
             }
             else{
-                //?�른 ?�류 경우??
+                //다른 오류 경우들
                 if(cat_id == -1){
-                    alert("고양?��? ?�택?��? ?�았?�니??")
+                    alert("고양이가 선택되지 않았습니다.")
                 }
                 else{
-                    alert("?�류")
+                    alert("오류")
                 }
             }
         });

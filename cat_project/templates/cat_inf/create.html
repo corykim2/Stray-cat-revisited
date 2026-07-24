@@ -16,68 +16,68 @@
     
     <!-- kakao map -->
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ KAKAO_JS_KEY }}"></script>
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e06e9f9b88886eb69986bcdf1d8faa31"></script>
 
     <!-- custom css & js-->
     <link rel="stylesheet" href="{% static '/css/create.css' %}">
     <script src="{% static '/js/create.js' %}" defer></script>
 
-    <title>고양???�성</title>
+    <title>고양이 생성</title>
 
 </head>
 
 <body>
     <div class="" style="border: 1px; border-color: black;">
         
-        <h1>?�보 ?�력</h1>
+        <h1>정보 입력</h1>
         <form method="post" action="{% url 'create' %}" enctype="multipart/form-data" id="image-form">
-            <center><div id="map" style="height:20em;"></div></center> <!-- 지??박스 -->
-            <p><em>지?��? ?�릭?�주?�요!</em></p>
+            <center><div id="map" style="height:20em;"></div></center> <!-- 지도 박스 -->
+            <p><em>지도를 클릭해주세요!</em></p>
     
             {% csrf_token %}
-            ?�름:
+            이름:
             <input name="name" type="text">
             <br><br>
             종류:
-            <input name="species" type="text" placeholder="고등?�태�?>
+            <input name="species" type="text" placeholder="고등어태비">
             <br><br>
-            ?�별:
-            <input name="sex" type="radio" value="?? checked="checked">??
-            <input name="sex" type="radio" value="??>??
+            성별:
+            <input name="sex" type="radio" value="암" checked="checked">암
+            <input name="sex" type="radio" value="수">수
             <input name="sex" type="radio" value="모름">모름
             <br><br>
-            중성???�무:
-            <input name="neutral" type="radio" value="?? checked="checked">??
-            <input name="neutral" type="radio" value="�?>�?
+            중성화 유무:
+            <input name="neutral" type="radio" value="유" checked="checked">유
+            <input name="neutral" type="radio" value="무">무
             <input name="neutral" type="radio" value="모름">모름
             <br><br>
-            ?�람 경계??
-            <input name="alert" type="radio" value="?? checked="checked">??
-            <input name="alert" type="radio" value="�?>�?
-            <input name="alert" type="radio" value="??>??
+            사람 경계도:
+            <input name="alert" type="radio" value="상" checked="checked">상
+            <input name="alert" type="radio" value="중">중
+            <input name="alert" type="radio" value="하">하
             <br><br>
-            ?�징:
-            <textarea id="textarea" rows="5" cols="30" name="character" placeholder="먹는 ?? ?�술?��?, ?�락???�픈 카톡�???고양?��? ?�록?�분 ?�개�??�어주세?? (고양???�세?�이지???�록?�니??)"></textarea>
+            특징:
+            <textarea id="textarea" rows="5" cols="30" name="character" placeholder="먹는 약, 수술여부, 연락할 오픈 카톡방 등 고양이와 등록자분 소개를 적어주세요! (고양이 상세페이지에 등록됩니다.)"></textarea>
             <br><br>
             <span class="problem" id="add_feed" style="cursor: pointer">add picture</span>
             <input name="photo" type="file" style="display: none;">
 
-            <input id="latitude" name="latitude" type="hidden" value=37.643388210851406> <!-- ?�도 보내??부�?-->
-            <input id="longitude" name="longitude" type="hidden" value=127.10764129356582> <!-- 경도 보내??부�?-->
+            <input id="latitude" name="latitude" type="hidden" value=37.643388210851406> <!-- 위도 보내는 부분 -->
+            <input id="longitude" name="longitude" type="hidden" value=127.10764129356582> <!-- 경도 보내는 부분 -->
             <br><br>
         </form>
-        <input type="submit" class="btn btn-primary mt-3" id="confirm-btn" value="?�록">
+        <input type="submit" class="btn btn-primary mt-3" id="confirm-btn" value="등록">
     </div>
     <!-- 모달 -->
     <div id="modal_add_feed" class="modal_overlay">
         <div class="modal_window">
             <div class="modal_title" style="display: block;"><input name="photo" type="file" id="id_file"></div>
-            <div id="image-box" class="mb-3"></div> <!-- ?�진 ?�집�??�오??부�?-->
-            <center><span id="close_modal" class="add" style="display: none;">?�인</span></center>
+            <div id="image-box" class="mb-3"></div> <!-- 사진 편집기 나오는 부분 -->
+            <center><span id="close_modal" class="add" style="display: none;">확인</span></center>
         </div>
     </div>
 
-    <!-- 지??코드 -->
+    <!-- 지도 코드 -->
     <script>
 
         var a = 37.643388210851406
@@ -85,27 +85,27 @@
         var mapContainer = document.getElementById('map'),
             mapOption = {
                 center: new kakao.maps.LatLng(a, b),
-                level: 2 // 지?�의 ?��? ?�벨
+                level: 2 // 지도의 확대 레벨
             };
 
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지?��? ?�성?�니??
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-        // 지?��? ?�릭???�치???�출??마커?�니??
+        // 지도를 클릭한 위치에 표출할 마커입니다
         var marker = new kakao.maps.Marker({
-            // 지??중심좌표??마커�??�성?�니??                            ?�거 마커 ?�치�??�용???�치�??�정?�도�??�야??
+            // 지도 중심좌표에 마커를 생성합니다                             이거 마커 위치를 사용자 위치로 설정하도록 해야함
             position: map.getCenter()
         });
-        // 지?�에 마커�??�시?�니??
+        // 지도에 마커를 표시합니다
         marker.setMap(map);
 
-        // 지?�에 ?�릭 ?�벤?��? ?�록?�니??
-        // 지?��? ?�릭?�면 마�?�??�라미터�??�어???�수�??�출?�니??
+        // 지도에 클릭 이벤트를 등록합니다
+        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
         kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
 
-            // ?�릭???�도, 경도 ?�보�?가?�옵?�다 
+            // 클릭한 위도, 경도 정보를 가져옵니다 
             var latlng = mouseEvent.latLng;
 
-            // 마커 ?�치�??�릭???�치�???��?�다
+            // 마커 위치를 클릭한 위치로 옮깁니다
             marker.setPosition(latlng);
 
             document.getElementById('latitude').value = latlng.getLat();
@@ -120,12 +120,12 @@
             $("#map").css({
                 display: 'none'
             });
-            modal.style.top = window.pageYOffset + 'px'; // top???�용???�작 y?�치�?바꿔�?
+            modal.style.top = window.pageYOffset + 'px'; // top을 이용해 시작 y위치를 바꿔줌 
             modal.style.display = "flex";
-            document.body.style.overflowY = "hidden"; // ?�크�??�애�?
+            document.body.style.overflowY = "hidden"; // 스크롤 없애기
         });
         
-        // 모달 ?�기 코드
+        // 모달 닫기 코드
         const buttonCloseModal = document.getElementById("close_modal");
         buttonCloseModal.addEventListener("click", e => {
             modal.style.display = "none";

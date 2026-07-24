@@ -1,5 +1,5 @@
 {% load static %}
-<!-- static ?�일 ?�용???�한 코드 -->
+<!-- static 파일 적용을 위한 코드 -->
 <!DOCTYPE html>
 
 <head>
@@ -14,7 +14,7 @@
 
     <!-- kakao map -->
     <script type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ KAKAO_JS_KEY }}&libraries=services,clusterer,drawing"></script>
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e06e9f9b88886eb69986bcdf1d8faa31&libraries=services,clusterer,drawing"></script>
 
     <!-- google material icons -->
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|
@@ -24,22 +24,22 @@
     <!-- custom css & js-->
     <link rel="stylesheet" href="{% static '/css/mypage.css' %}">
 
-    <title>마이?�이지</title>
+    <title>마이페이지</title>
 </head>
 
 <body>
-    <!-- ?�기 꾸며�????�스?� ?�로???�이지처럼 꾸며주면 좋을??-->
-    <!-- https://fonts.google.com/icons ?�기?�서 ?�이�?찾아???�면 ?? 방법?� ?�면 그냥 ?�고 ?�니�??�한??문의 -->
+    <!-- 여기 꾸며줄 때 인스타 프로필 페이지처럼 꾸며주면 좋을듯 -->
+    <!-- https://fonts.google.com/icons 여기에서 아이콘 찾아서 쓰면 됨, 방법은 알면 그냥 하고 아니면 나한테 문의 -->
     <br><br>
-    <span id="button_my_cat_list" class="problem" style="cursor: pointer">??고양??보기</span><!-- 버튼?�니�???꾸며�?-->
-    <span id="button_booked_cat_list" class="problem" style="cursor: pointer">북마??고양??보기</span><!-- ?�도! -->
+    <span id="button_my_cat_list" class="problem" style="cursor: pointer">내 고양이 보기</span><!-- 버튼이니까 잘 꾸며줘 -->
+    <span id="button_booked_cat_list" class="problem" style="cursor: pointer">북마크 고양이 보기</span><!-- 얘도! -->
     <br>
-    <!-- ?�기가 고양??div ?�성?�는 부분이?? for�??�에?�는 html코드가 반복?�면???�이지가 ?�성?�는 ?�식?�니�?그거 ?�고 꾸며주면 ?? -->
-    <!-- 그리�??�기??고양??최근 �?준 ?�간, 건강?�태같이 detail?�서 주문??�??�을 ???�는 부분도 미리 만들?�주�?좋을 �?같아. -->
+    <!-- 여기가 고양이 div 생성하는 부분이야. for문 안에있는 html코드가 반복되면서 페이지가 생성되는 형식이니까 그거 알고 꾸며주면 돼. -->
+    <!-- 그리고 여기에 고양이 최근 밥 준 시간, 건강상태같이 detail에서 주문한 거 넣을 수 있는 부분도 미리 만들어주면 좋을 것 같아. -->
 
-    <!-- ?�고?�이 ?�성 부�?-->
+    <!-- 내고양이 생성 부분 -->
     <br>
-    <!-- ?�기 css?�일???�리?�면 ?�상?�게 ?�뀌니�??�리?��? 말고 그냥 ?�자-->
+    <!-- 여기 css파일에 정리하면 이상하게 다뀌니까 정리하지 말고 그냥 쓰자-->
     <div style="display: flex; justify-content: center;">
         <div id="my_cat_list" style="display: block;">
             <hr style="width:100%;">
@@ -48,21 +48,21 @@
                     <div style="display: inline-block; margin-right: 7px;"><a href='/account/detail/{{cat.id}}'><img src="{% get_media_prefix %}{{cat.photo}}" width="100px"></a></div>
                     <div style="display: inline-block; text-align: left; margin-top: 3px;">
                         <span class="name">{{cat.name}}</span><br>
-                        경계?? {{cat.alert}}<br>
+                        경계도: {{cat.alert}}<br>
                         {% if cat.complaint_count != 0 %}
                             <span class="material-symbols-outlined" style="color: rgb(230, 57, 45);" >error</span>
-                            <span style="color: rgb(230, 57, 45);">민원??{{ cat.complaint_count }}�?발생</span><br>
+                            <span style="color: rgb(230, 57, 45);">민원이 {{ cat.complaint_count }}개 발생</span><br>
                         {% endif %}
                         {% if cat.injury_count != 0 %}
                         <span class="material-symbols-outlined" style="color: rgb(255, 153, 0);" >error</span>
-                        <span style="color: rgb(255, 153, 0);">부??발생!</span>
+                        <span style="color: rgb(255, 153, 0);">부상 발생!</span>
                         {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-    <!-- 즐찾 고양???�성 부�?-->
+    <!-- 즐찾 고양이 생성 부분 -->
     <div style="display: flex; justify-content: center;">
         <div id="booked_cat_list" style="display: none">
             <hr style="width:100%;">
@@ -71,14 +71,14 @@
                     <div style="display: inline-block; margin-right: 7px;"><a href='/account/detail/{{cat.id}}'><img src="{% get_media_prefix %}{{cat.photo}}" width="100px"></a></div>
                     <div style="display: inline-block; text-align: left; margin-top: 3px;">
                         <span class="name">{{cat.name}}</span><br>
-                        경계?? {{cat.alert}}<br>
+                        경계도: {{cat.alert}}<br>
                         {% if cat.complaint_count != 0 %}
                             <span class="material-symbols-outlined" style="color: rgb(230, 57, 45);" >error</span>
-                            <span style="color: rgb(230, 57, 45);">민원??{{ cat.complaint_count }}�?발생</span><br>
+                            <span style="color: rgb(230, 57, 45);">민원이 {{ cat.complaint_count }}개 발생</span><br>
                         {% endif %}
                         {% if cat.injury_count != 0 %}
                         <span class="material-symbols-outlined" style="color: rgb(255, 153, 0);" >error</span>
-                        <span style="color: rgb(255, 153, 0);">부??발생!</span>
+                        <span style="color: rgb(255, 153, 0);">부상 발생!</span>
                         {% endif %}
                     </div>
                 </div>
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <!-- 버튼 ?�크립트 코드 -->
+    <!-- 버튼 스크립트 코드 -->
     <script>
         $("#button_my_cat_list").click(function(){
             $("#my_cat_list").css({
