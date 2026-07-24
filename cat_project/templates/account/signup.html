@@ -1,4 +1,4 @@
-{% load static %}<!-- static 파일 적용을 위한 코드 -->
+{% load static %}<!-- static ?�일 ?�용???�한 코드 -->
 <!DOCTYPE html>
 
 <head>
@@ -10,19 +10,19 @@
 <body>
     <div class="box1">
         <div class="box2" style = "text-align: center;">
-            <h1>회원가입</h1>
+            <h1>?�원가??/h1>
             <form method="POST" action="{% url 'signup' %}">
                 {% csrf_token %}
-                아이디<br>
+                ?�이??br>
                 <input name="name" type="text">
                 <br>
-                비밀번호<br>
+                비�?번호<br>
                 <input name="password1" type="password">
                 <br>
-                비밀번호 확인<br>
+                비�?번호 ?�인<br>
                 <input name="password2" type="password">
                 <br>
-                이메일<br>
+                ?�메??br>
                 <input name="email" type="email">
                 <br><br>
                <input type="submit" class="btn btn-primary" value="Sign Up">

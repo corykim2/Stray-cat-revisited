@@ -10,7 +10,7 @@
 <body>
     <div class="box1">
         <div class="box2">
-            <h1>로그인</h1>
+            <h1>로그??/h1>
             <!--
             <form action = "{% url 'login' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -20,32 +20,32 @@
                     {{field}}
                 </div>
             {% endfor %}
-                <button type="submit">로그인</button>
+                <button type="submit">로그??/button>
             </form>
             -->
             
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 <div>
-                    <label>이메일&nbsp&nbsp&nbsp&nbsp</label>
+                    <label>?�메??nbsp&nbsp&nbsp&nbsp</label>
                     <input type="text" name="username" id="username">
                 </div>
                 <div>
-                    <label>비밀번호&nbsp;&nbsp;</label>
+                    <label>비�?번호&nbsp;&nbsp;</label>
                     <input type="password" name="password" id="password">
                 </div>
                 <br><br>
-                <button type="submit">로그인</button>
+                <button type="submit">로그??/button>
             </form>
 
-            <!-- 로그인 에러 메시지 출력 -->
+            <!-- 로그???�러 메시지 출력 -->
             {% for message in messages %}
             <div class="alert alert-info">{{message}}</div>
             {% endfor %}
 
             <br><br><br><br>
-            <p>혹시 회원이 아니신가요?</p>
-            <a href="{% url 'signup' %}">회원가입</a>
+            <p>?�시 ?�원???�니?��???</p>
+            <a href="{% url 'signup' %}">?�원가??/a>
         </div>
     </div>
 </body>
